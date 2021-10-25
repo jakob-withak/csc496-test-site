@@ -1,21 +1,23 @@
-import * as React from 'react'
-import { graphql } from 'gatsby'
-import Layout from '../components/layout'
-const BlogPage = ({ data }) => {
+import React from "react"
+import { Link, graphql } from "gatsby"
+import Layout from "../components/layout"
+export default function Home({ data }) {
   return (
-    <Layout pageTitle="My Blog Posts">
-       <h1>My WordPress Blog</h1>
+    <Layout pageTitle="Blog Home">
+      
+      <h1>My WordPress Blog</h1>
       <h4>Posts</h4>
       {data.allWpPost.edges.map(({ node }) => (
-        <div>
-          <p>{node.title}</p>
+        <div key={node.slug}>
+          <Link to={node.slug}>
+            <p>{node.title}</p>
+          </Link>
           <div dangerouslySetInnerHTML={{ __html: node.excerpt }} />
         </div>
       ))}
     </Layout>
   )
 }
-
 export const pageQuery = graphql`
   query {
     allWpPost(sort: { fields: [date] }) {
@@ -27,5 +29,5 @@ export const pageQuery = graphql`
         }
       }
     }
-  }`
-export default BlogPage
+  }
+`
